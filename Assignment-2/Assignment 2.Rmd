@@ -1,0 +1,57 @@
+---
+title: "Developing Data Products Week 2 Assignment"
+author: Carolina San Martín
+output: ioslides_presentation
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+This project is part of the week 2 assignment of the course “Develpoing Data Products” of Data Science specialization with R from Johns Hopkins University. The aim of this project is to create a webpage that contains a map created with leaflet package.
+
+```{r packages, error=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+
+# Packages used in this report
+packages <- c("knitr","dplyr","leaflet")
+for (p in packages) {
+        if (!require(p,character.only = TRUE)){install.packages(p)}; library(p,character.only = TRUE)
+}   
+
+``` 
+
+## Submission
+This webpage presents the locations of some of the best universities in Chile to study a bachelor in computer sciences. The popups will show the name of the university.
+
+Note: Google map was the unique source of information :)
+
+
+## Mapping
+
+```{r places, echo=FALSE}
+map <- leaflet() %>%
+        addTiles() %>%  # Add default OpenStreetMap map tiles
+        addMarkers(lat = -33.457737, lng = -70.664718, popup = "University of Chile - Department of Computer Sciences") %>% 
+        addMarkers(lat = -33.496518, lng = -70.607781, popup = "Pontifical Catholic University of Chile - Department of Computer Sciences") %>% 
+        addMarkers(lat = -33.034718, lng = -71.596716, popup = "Federico Santa María Technical University - Department of Informatics") %>% 
+        addMarkers(lat = -36.830859, lng = -73.036740, popup = "University of Concepción -  Department of Computer Science")
+map
+```
+
+
+## Mapping Clusters
+To try the mapping clusters, create a data frame with a simulation of coordenates based on the places preented in previous plot. When you zoom in to each cluster, the cluster will seperate until you see the individual Markers.
+
+
+## Clusters around Chile
+```{r clusters, echo=FALSE}
+df <- data.frame(lat=runif(300, min = -36.830859, max = -33.034718),
+                 lng=runif(300, min = -73.036740, max = -70.607781))  
+df %>%
+leaflet() %>%
+addTiles() %>%  
+addMarkers(clusterOptions = markerClusterOptions()) 
+```
+
