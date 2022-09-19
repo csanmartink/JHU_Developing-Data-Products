@@ -12,12 +12,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Introduction
 This project is part of the week 2 assignment of the course “Develpoing Data Products” of Data Science specialization with R from Johns Hopkins University. The aim of this project is to create a webpage that contains a map created with leaflet package.
 
-```{r packages, error=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+```{r packages, error=FALSE, message=FALSE, warning=FALSE}
 
 # Packages used in this report
 packages <- c("knitr","dplyr","leaflet")
 for (p in packages) {
-        if (!require(p,character.only = TRUE)){install.packages(p)}; library(p,character.only = TRUE)
+        if (!require(p,character.only = TRUE)){install.packages(p)}; 
+        library(p,character.only = TRUE)
 }   
 
 ``` 
@@ -30,7 +31,7 @@ Note: Google map was the unique source of information :)
 
 ## Mapping
 
-```{r places, echo=FALSE}
+```{r places, echo=TRUE}
 map <- leaflet() %>%
         addTiles() %>%  # Add default OpenStreetMap map tiles
         addMarkers(lat = -33.457737, lng = -70.664718, popup = "University of Chile - Department of Computer Sciences") %>% 
@@ -46,7 +47,7 @@ To try the mapping clusters, create a data frame with a simulation of coordenate
 
 
 ## Clusters around Chile
-```{r clusters, echo=FALSE}
+```{r clusters, echo=TRUE}
 df <- data.frame(lat=runif(300, min = -36.830859, max = -33.034718),
                  lng=runif(300, min = -73.036740, max = -70.607781))  
 df %>%
