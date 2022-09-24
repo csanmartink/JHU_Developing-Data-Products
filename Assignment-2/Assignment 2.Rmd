@@ -1,7 +1,10 @@
 ---
 title: "Developing Data Products Week 2 Assignment"
 author: Carolina San Martín
-output: ioslides_presentation
+output: 
+        ioslides_presentation:
+                smaller: true
+                widescreen: true
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 ---
 
@@ -30,14 +33,16 @@ Note: Google map was the unique source of information :)
 
 
 ## Mapping
-
-```{r places, echo=TRUE}
-map <- leaflet() %>%
-        addTiles() %>%  # Add default OpenStreetMap map tiles
-        addMarkers(lat = -33.457737, lng = -70.664718, popup = "University of Chile - Department of Computer Sciences") %>% 
-        addMarkers(lat = -33.496518, lng = -70.607781, popup = "Pontifical Catholic University of Chile - Department of Computer Sciences") %>% 
-        addMarkers(lat = -33.034718, lng = -71.596716, popup = "Federico Santa María Technical University - Department of Informatics") %>% 
-        addMarkers(lat = -36.830859, lng = -73.036740, popup = "University of Concepción -  Department of Computer Science")
+```{r places, echo=TRUE, out.width = '50%'}
+map <- leaflet(height = 280, width = 700) %>% addTiles() %>%  
+        addMarkers(lat = -33.457737, lng = -70.664718, popup = "University of Chile - Department 
+                   of Computer Sciences") %>% 
+        addMarkers(lat = -33.496518, lng = -70.607781, popup = "Pontifical Catholic University of Chile -
+                   Department of Computer Sciences") %>% 
+        addMarkers(lat = -33.034718, lng = -71.596716, popup = "Federico Santa María Technical University -
+                   Department of Informatics") %>% 
+        addMarkers(lat = -36.830859, lng = -73.036740, popup = "University of Concepción -  Department 
+                   of Computer Science")
 map
 ```
 
@@ -51,7 +56,7 @@ To try the mapping clusters, create a data frame with a simulation of coordenate
 df <- data.frame(lat=runif(300, min = -36.830859, max = -33.034718),
                  lng=runif(300, min = -73.036740, max = -70.607781))  
 df %>%
-leaflet() %>%
+leaflet(height = 350, width = 700) %>%
 addTiles() %>%  
 addMarkers(clusterOptions = markerClusterOptions()) 
 ```
