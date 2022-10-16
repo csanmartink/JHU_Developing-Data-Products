@@ -1,0 +1,28 @@
+---
+title: "Developing Data Products \nWeek 3 Assignment"
+author: Carolina San Martín
+output: 
+        ioslides_presentation:
+                smaller: true
+                widescreen: true
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+This project is part of the week 2 assignment of the course “Develpoing Data Products” of Data Science specialization with R from Johns Hopkins University. The aim of this project is to create a webpage that contains plots using plotly.
+
+```{r packages, error=FALSE, message=FALSE, warning=FALSE}
+
+# Packages used in this report
+packages <- c("knitr","dplyr","leaflet")
+for (p in packages) {
+        if (!require(p,character.only = TRUE)){install.packages(p)}; 
+        library(p,character.only = TRUE)
+}   
+
+``` 
+
