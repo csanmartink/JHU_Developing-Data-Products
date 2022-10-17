@@ -1,5 +1,6 @@
 ---
-title: "Developing Data Products \nWeek 3 Assignment"
+title: "Developing Data Products"
+subtitle: "Week 3 Assignment"
 author: Carolina San Martín
 output: 
         ioslides_presentation:
@@ -13,12 +14,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Introduction
-This project is part of the week 2 assignment of the course “Develpoing Data Products” of Data Science specialization with R from Johns Hopkins University. The aim of this project is to create a webpage that contains plots using plotly.
+This project is part of the week 3 assignment of the course “Develpoing Data Products” of Data Science specialization with R from Johns Hopkins University. The aim of this project is to create a webpage that contains plots using plotly.
+
+So I made two interactive plots using plotly and two datasets: mtcars (which comes with the dplyr package, also contained in tidyr package) and EuroStockMarket.
 
 ```{r packages, error=FALSE, message=FALSE, warning=FALSE}
-
 # Packages used in this report
-packages <- c("knitr","dplyr","leaflet")
+packages <- c('knitr','tidyr','magrittr','plotly')
 for (p in packages) {
         if (!require(p,character.only = TRUE)){install.packages(p)}; 
         library(p,character.only = TRUE)
@@ -26,3 +28,31 @@ for (p in packages) {
 
 ``` 
 
+
+## A quick example
+```{r pressure, echo=TRUE, message=FALSE, warning=FALSE, fig.align='right',fig.height=4}
+mtcars %<>% mutate(cyl = as.factor(cyl))
+plot_ly(mtcars, x = ~wt, y = ~mpg, mode = 'markers', color = ~cyl, size = ~hp) %>%
+  layout(xaxis = list(title = 'Weight (1000 lbs)'),
+         yaxis = list(title = 'Miles/(US) gallon'))
+```
+
+## 3D example
+```{r 3d, echo=TRUE, message=FALSE, warning=FALSE, fig.align='center',fig.height=4}
+mtcars %<>% mutate(vs = ifelse(vs==0,'V-shaped','Straight'),vs = factor(vs, levels = c('V-shaped','Straight')))
+plot_ly(mtcars, x = ~wt, y = ~hp, z = ~qsec, color = ~vs) %>% add_markers() %>% 
+        layout(scene = list(xaxis = list(title = 'Weight (1000 lbs)'), 
+                            yaxis = list(title = 'Gross horsepower'), zaxis = list(title = '1/4 mile time')),
+               annotations = list(x = 1.13, y = 1.05, xref = 'paper', yref = 'paper',
+                        showarrow = FALSE, text = 'Engine'))
+```
+
+
+## Another example using EurostockMarkets data
+```{r eurostock, echo=TRUE, message=FALSE, warning=FALSE, fig.align='center',fig.height=4}
+data("EustockMarkets")
+stocks <- as.data.frame(EuStockMarkets) %>% 
+        gather(index, price) %>% 
+        mutate(time = rep(time(EuStockMarkets),4))
+plot_ly(stocks, x = ~time, y = ~price, color = ~index)
+```
